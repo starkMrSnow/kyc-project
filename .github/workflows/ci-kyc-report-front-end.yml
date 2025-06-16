@@ -1,4 +1,4 @@
-name: CI - Frontend Report
+name: CI - Kyc Frontend Report
 
 on:
   workflow_dispatch:
