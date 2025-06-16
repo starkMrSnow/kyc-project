@@ -66,6 +66,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./kyc-backend-report
+          context: ./kyc-service
           push: true
           tags: cecillwala/kyc-kyc-service:latest
