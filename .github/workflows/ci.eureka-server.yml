@@ -1,4 +1,4 @@
-name: CD - Eureka Server
+name: CI - Eureka Server
 
 on:
   workflow_dispatch:
