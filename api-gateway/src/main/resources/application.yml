@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      routes:
+
+        - id: kyc-service
+          uri:  lb://kyc-service
+          predicates:
+            - Path=/kyc/**
+
+        - id: report-service
+          uri:  lb://report-service
+          predicates:
+            - Path=/admin/**
+            
+        - id: email-service
+          uri:  lb://email-service
+          predicates:
+            - Path=/email/**
+
+        - id: kyc-health
+          uri:  lb://kyc-service
+          predicates:
+            - Path=/health/kyc
+          filters:
+            - RewritePath=/health/kyc, /actuator/health
+
+
+        - id: email-health
+          uri:  lb://email-service
+          predicates:
+            - Path=/health/email
+          filters:
+            - RewritePath=/health/email, /actuator/health
+
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+
+
+
+server:
+  port: 8080
+  address: 0.0.0.0
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka-server:9099/eureka
+
