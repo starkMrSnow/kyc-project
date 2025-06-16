@@ -1,4 +1,4 @@
-name: Angular CI
+name: CI - Frontend Report
 
 on:
   workflow_dispatch:
