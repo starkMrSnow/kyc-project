@@ -1,13 +1,12 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { KycService, CustomerDto } from '../../services/kyc.service';
 
 @Component({
   selector: 'app-table',
   imports: [ NgFor, NgIf],
   templateUrl: './table.component.html',
-  styleUrl: './table.component.scss',
-  providers: [KycService]
+  styleUrl: './table.component.scss'
 })
 export class TableComponent {
  customers: CustomerDto[] = [];
@@ -15,9 +14,10 @@ export class TableComponent {
  constructor(private kycService: KycService){}
 
 
-  emailStatus = signal("");
-  kycStatus = signal("");
-
+  healthStatus = {
+    email: 'Unknown',
+    kyc: 'Unknown'
+  }
 
   showHealthStatusModal = true;
 
@@ -92,10 +92,11 @@ fetchCustomers() {
 }
 
 checkServiceHealth() {
-  this.kycService.getEmailServiceHealth('email').subscribe({
+  this.kycService.getServiceHealth('email').subscribe({
     next: (response: any ) => {
-      console.log(response);
-      this.emailStatus.set(response.status);
+      if (response && response.status) {
+        this.healthStatus.email = response.status;
+      }
     },
     error: (err: any) => {
       console.warn('Email service check failed:', err);
@@ -103,10 +104,11 @@ checkServiceHealth() {
     }
   });
 
-  this.kycService.getKycServiceHealth('kyc').subscribe({
+  this.kycService.getServiceHealth('kyc').subscribe({
     next: (response: any) => {
-      console.log(response);
-      this.kycStatus.set(response.status);
+      if (response && response.status) {
+        this.healthStatus.kyc = response.status;
+      }
     },
     error: (err: any) => {
       console.warn('KYC service check failed:', err);

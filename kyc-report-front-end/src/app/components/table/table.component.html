@@ -1,5 +1,22 @@
 
+<div class="main-content">
+<!-- modal for health status -->
 <div>
+  <div class="health-status-box">
+    <h3>Service Health</h3>
+    <p>Email Service: 
+      <span [class.up]="healthStatus.email === 'Up'" [class.down]="healthStatus.email === 'Down'">
+        {{ healthStatus.email }}
+      </span>
+    </p>
+    <p>KYC Service: 
+      <span [class.up]="healthStatus.kyc === 'Up'" [class.down]="healthStatus.kyc === 'Down'">
+        {{ healthStatus.kyc }}
+      </span>
+    </p>
+  </div>
+</div>
+
   <div class="custom-table-container">
     <table class="custom-table">
       <thead>
@@ -9,7 +26,6 @@
           <th>Info</th>
         </tr>
       </thead>
-      
       <tbody>
         <tr *ngFor="let customer of customers">
           <td>{{ customer.customerId }}</td>
@@ -32,23 +48,7 @@
     </table>
   </div>
 
-   <!-- modal for health status -->
-  <!-- Service Health Modal -->
-<div>
-  <div class="health-status-box">
-    <h3>Service Health</h3>
-    <p>Email Service: 
-      <span [class.up]="emailStatus() === 'UP'" [class.down]="emailStatus() === 'DOWN'">
-        {{ emailStatus() }}
-      </span>
-    </p>
-    <p>KYC Service: 
-      <span [class.up]="kycStatus() === 'UP'" [class.down]="kycStatus() === 'DOWN'">
-        {{ kycStatus() }}
-      </span>
-    </p>
-  </div>
-</div>
+
 
 </div>
 
