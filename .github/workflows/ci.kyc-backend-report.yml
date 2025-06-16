@@ -1,15 +1,15 @@
 name: Build and test Spring-Boot project
 
 on:
+  workflow_dispatch:
   push:
     paths:
-      - '/kyc-backend-report/**'
+      - 'kyc-backend-report/**'
     branches: [ "main"]
   pull_request:
     paths:
-      - '/kyc-backend-report/**'
+      - 'kyc-backend-report/**'
     branches: [ "main"]
-
 jobs:
   build:
     runs-on: ubuntu-latest
