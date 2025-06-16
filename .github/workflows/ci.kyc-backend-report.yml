@@ -3,11 +3,11 @@ name: Build and test Spring-Boot project
 on:
   push:
     paths:
-      - 'kyc-backend-report/**'
+      - '/kyc-backend-report/**'
     branches: [ "main"]
   pull_request:
     paths:
-      - 'kyc-backend-report/**'
+      - '/kyc-backend-report/**'
     branches: [ "main"]
 
 jobs:
