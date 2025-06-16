@@ -1,4 +1,4 @@
-name: CI - Eureka Server
+name: CI - Email Server
 
 on:
   workflow_dispatch:
