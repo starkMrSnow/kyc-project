@@ -1,4 +1,4 @@
-name: CI kyc-backend
+name: CI kyc-backend report
 
 on:
   workflow_dispatch:
