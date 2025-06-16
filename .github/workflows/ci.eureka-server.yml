@@ -1,0 +1,51 @@
+name: CD - Eureka Server
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'eureka-server/**'
+    branches: [ "main", "dev"]
+  pull_request:
+    paths:
+      - 'eureka-server/**'
+    branches: [ "main", "dev"]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: eureka-server
+
+    env:
+      SPRING_PROFILES_ACTIVE: prod
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21 (LTS)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+          cache-dependency-path: eureka-server/pom.xml
+
+      - name: Build and test with Maven
+        run: mvn clean verify
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.CECIL_USERNAME }}
+          password: ${{ secrets.CECIL_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./eureka-server
+          push: true
+          tags: cecillwala/kyc-eureka-server:latest
