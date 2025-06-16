@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { KycService } from './kyc.service';
 
 describe('KycService', () => {
   let service: KycService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [KycService]
+    });
     service = TestBed.inject(KycService);
   });
 

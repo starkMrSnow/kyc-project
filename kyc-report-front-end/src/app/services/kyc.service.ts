@@ -18,43 +18,40 @@ export interface CustomerDto {
 
 @Injectable()
 export class KycService {
-  private baseUrl = 'https://giktekkyc.org/';//base url for the backend
+  private baseUrl = 'http://localhost:8083/admin';
 
   constructor(private http: HttpClient) {}
 
   //fetch full details
-  getAllCustomers(): Observable<CustomerDto[]> {
-    return this.http.get<CustomerDto[]>(`${this.baseUrl}admin/customers`);
+  getAllCustomers(): Observable<CustomerDto[]> { 
+    return this.http.get<CustomerDto[]>(`${this.baseUrl}/customers`);
   }
 
   //fetch id and name
   getCustomerIdsAndNames(): Observable<{ id: number; name: string }[]> {
-    return this.http.get<{ id: number; name: string }[]>(`${this.baseUrl}admin/IdName`);
+    return this.http.get<{ id: number; name: string }[]>(`${this.baseUrl}/IdName`);
   }
 
   ///fetch detailed customer details
   getCustomerDetails(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}admin/details`);
+    return this.http.get<any[]>(`${this.baseUrl}/details`);
   }
 
   //fetch selfie url
   getCustomerSelfies(): Observable<{ selfie: string }[]> {
-    return this.http.get<{ selfie: string }[]>(`${this.baseUrl}admin/selfie`);
+    return this.http.get<{ selfie: string }[]>(`${this.baseUrl}/selfie`);
   }
 
   //download pdf
   exportCustomerToPdf(email: string): Observable<Blob> {
-    return this.http.get(`${this.baseUrl}admin/export-pdf/${email}`, {
+    return this.http.get(`${this.baseUrl}/export-pdf/${email}`, {
       responseType: 'blob'
     });
   }
-  getEmailServiceHealth(service: string): Observable<{ status: string }> {
-  return this.http.get<{ status: string }>(`${this.baseUrl}health/email`);
+  getServiceHealth(service: string): Observable<{ status: string }> {
+  return this.http.get<{ status: string }>(`/api/health/${service}`);
 }
 
-getKycServiceHealth(service: string): Observable<{ status: string }> {
-  return this.http.get<{ status: string }>(`${this.baseUrl}health/kyc`);
-}
  removeCustomerSelfie(email: string): Observable<string>{
   return this.http.delete(`${this.baseUrl}/rmSelfie/${email}`,{
     responseType: 'text'
