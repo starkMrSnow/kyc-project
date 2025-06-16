@@ -1,4 +1,4 @@
-name: CI - Email Server
+name: CI - Email Service
 
 on:
   workflow_dispatch:
