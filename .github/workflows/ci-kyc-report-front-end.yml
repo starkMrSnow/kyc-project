@@ -1,6 +1,7 @@
 name: Angular CI
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'kyc-report-front-end/**'
