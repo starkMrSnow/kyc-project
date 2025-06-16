@@ -4,11 +4,11 @@ on:
   push:
     paths:
       - 'kyc-backend-report/**'
-    branches: [ "main", "dev"]
+    branches: [ "main"]
   pull_request:
     paths:
       - 'kyc-backend-report/**'
-    branches: [ "main", "dev"]
+    branches: [ "main"]
 
 jobs:
   build:
