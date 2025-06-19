@@ -7,6 +7,7 @@ import com.giktek.email_service.Services.EmailService;
 
 import jakarta.mail.MessagingException;
 
+
 @RestController
 @RequestMapping("/email")
 public class EmailController {

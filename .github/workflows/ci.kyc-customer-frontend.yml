@@ -1,0 +1,66 @@
+name: CI - Email Service
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'email-service/**'
+    branches:
+      - main
+      - dev
+  pull_request:
+    paths:
+      - 'email-service/**'
+    branches:
+      - main
+      - dev
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: email-service
+
+    env:
+      SPRING_PROFILES_ACTIVE: prod
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 24 (LTS)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '24'
+          distribution: 'temurin'
+          cache: maven
+          cache-dependency-path: email-service/pom.xml
+
+      - name: Build and test with Maven
+        run: mvn clean verify
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.CECIL_USERNAME }}
+          password: ${{ secrets.CECIL_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./email-service
+          push: true
+          tags: cecillwala/kyc-email-service:latest
+
+      - name: Trigger CD Repo
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          curl -X POST \
+            -H "Authorization: token $GH_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/cecillwala/kubernetes/dispatches \
+            -d '{"event_type": "deploy-service", "client_payload": {"image_tag": "latest"}}'
+
