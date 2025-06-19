@@ -36,7 +36,6 @@ public class CustomerDTO {
 public Long getId(){
     return this.customerId;
 }
-
 }
 
 
