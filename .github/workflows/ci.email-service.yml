@@ -49,3 +49,14 @@ jobs:
           context: ./email-service
           push: true
           tags: cecillwala/kyc-email-service:latest
+
+
+      - name: Trigger CD Repo
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          curl -X POST \
+            -H "Authorization: token $GH_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/cecillwala/kubernetes/dispatches \
+            -d '{"event_type": "deploy-service", "client_payload": {"image_tag": "latest"}}'
