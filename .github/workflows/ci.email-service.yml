@@ -5,11 +5,15 @@ on:
   push:
     paths:
       - 'email-service/**'
-    branches: [ "main", "dev"]
+    branches:
+      - main
+      - dev
   pull_request:
     paths:
       - 'email-service/**'
-    branches: [ "main", "dev"]
+    branches:
+      - main
+      - dev
 
 jobs:
   build-and-deploy:
@@ -49,7 +53,6 @@ jobs:
           context: ./email-service
           push: true
           tags: cecillwala/kyc-email-service:latest
-
 
       - name: Trigger CD Repo
         env:
