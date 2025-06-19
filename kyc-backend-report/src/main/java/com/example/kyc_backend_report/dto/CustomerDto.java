@@ -6,7 +6,7 @@ public class CustomerDto {
     private Long customerId;
     private String firstName;
     private String lastName;
-     private String phoneNumber;
+    private String phoneNumber;
     private String dateOfBirth;
     private String county;
     private String employmentStatus;

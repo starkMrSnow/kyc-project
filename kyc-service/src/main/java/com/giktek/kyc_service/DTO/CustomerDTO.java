@@ -33,6 +33,7 @@ public class CustomerDTO {
     this.isCaptured = customer.isCaptured();
 }
 
+    
 public Long getId(){
     return this.customerId;
 }

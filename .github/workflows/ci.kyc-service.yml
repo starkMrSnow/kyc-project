@@ -1,22 +1,22 @@
-name: CI - Kyc Backend Report
+name: CI - Kyc Service
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - 'kyc-backend-report/**'
-    branches: [ "main", "dev"]
+      - 'kyc-service/**'
+    branches: [ "main"]
   pull_request:
     paths:
-      - 'kyc-backend-report/**'
-    branches: [ "main", "dev"]
+      - 'kyc-service/**'
+    branches: [ "main"]
 jobs:
   build:
     runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: kyc-backend-report
+        working-directory: kyc-service
 
     permissions:
       contents: read
@@ -60,15 +60,15 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.STAN_USERNAME }}
-          password: ${{ secrets.STAN_PASSWORD }}
+          username: ${{ secrets.CECIL_USERNAME }}
+          password: ${{ secrets.CECIL_PASSWORD }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./kyc-backend-report
+          context: ./kyc-service
           push: true
-          tags: stanleyotieno/kyc-backend-report:latest
+          tags: cecillwala/kyc-kyc-service:latest
       - name: Trigger CD Repo
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
